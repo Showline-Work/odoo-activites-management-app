@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- LIST VIEW -->
+    <record id="view_activity_management_list" model="ir.ui.view">
+        <field name="name">activity.management.list</field>
+        <field name="model">activity.management</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name"/>
+                <field name="state" widget="badge"/>
+                <field name="priority" widget="priority"/>
+                <field name="duration_display"/>
+                <field name="date_start"/>
+                <field name="date_due"/>
+                <field name="user_ids" widget="many2many_tags"/>
+                <field name="collaborator_ids" widget="many2many_tags" optional="show"/>
+                <field name="customer_id" optional="show"/>
+                <field name="activity_type_id"/>
+                <field name="recurrence_display"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- KANBAN VIEW -->
+    <record id="view_activity_management_kanban" model="ir.ui.view">
+        <field name="name">activity.management.kanban</field>
+        <field name="model">activity.management</field>
+        <field name="arch" type="xml">
+            <kanban default_group_by="state">
+                <field name="name"/>
+                <field name="date_start"/>
+                <field name="date_due"/>
+                <field name="priority"/>
+                <field name="state"/>
+                <field name="user_ids"/>
+                <field name="collaborator_ids"/>
+                <field name="customer_id"/>
+                <field name="activity_type_id"/>
+                <field name="is_recurring"/>
+                <field name="is_overdue"/>
+                <field name="recurrence_display"/>
+                <field name="duration_display"/>
+                <field name="sub_activity_count"/>
+                <templates>
+                    <t t-name="card">
+                        <div class="oe_kanban_card">
+                            <strong><field name="name"/></strong>
+                            <t t-if="record.is_recurring.raw_value">
+                                <i class="fa fa-refresh text-info"/>
+                            </t>
+                            <div><field name="state" widget="badge"/></div>
+                            <div><field name="duration_display"/> · <field name="date_due"/></div>
+                            <t t-if="record.is_overdue.raw_value">
+                                <span class="badge bg-danger">Overdue</span>
+                            </t>
+                            <div><field name="user_ids" widget="many2many_avatar_user"/></div>
+                            <div><field name="recurrence_display"/></div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+    <!-- CALENDAR VIEW -->
+    <record id="view_activity_management_calendar" model="ir.ui.view">
+        <field name="name">activity.management.calendar</field>
+        <field name="model">activity.management</field>
+        <field name="arch" type="xml">
+            <calendar date_start="date_start" date_stop="date_due" color="state">
+                <field name="name"/>
+            </calendar>
+        </field>
+    </record>
+
+    <!-- FORM VIEW -->
+    <record id="view_activity_management_form" model="ir.ui.view">
+        <field name="name">activity.management.form</field>
+        <field name="model">activity.management</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button name="action_start" type="object" string="Start" class="btn-primary" invisible="state != 'new'"/>
+                    <button name="action_done" type="object" string="Mark as Done" class="btn-success" invisible="state in ('done','cancelled')"/>
+                    <button name="action_cancel" type="object" string="Cancel" class="btn-secondary" invisible="state in ('done','cancelled')"/>
+                    <button name="action_reopen" type="object" string="Reopen" class="btn-warning" invisible="state not in ('done','cancelled')"/>
+                    <field name="state" widget="statusbar"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <h1><field name="name" placeholder="Activity title..." required="1"/></h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="description" widget="html"/>
+                            <field name="activity_type_id"/>
+                            <field name="priority" widget="priority"/>
+                            <field name="note"/>
+                            <field name="customer_id"/>
+                        </group>
+                        <group>
+                            <field name="user_ids" widget="many2many_avatar_user"/>
+                            <field name="collaborator_ids" widget="many2many_avatar_user"/>
+                            <field name="is_all_day"/>
+                            <field name="date_start"/>
+                            <field name="date_due"/>
+                            <field name="duration_display" readonly="1"/>
+                            <field name="date_done" readonly="1"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Recurring">
+                            <group>
+                                <field name="is_recurring" invisible="1"/>
+                                <field name="recurrence_display" readonly="1"/>
+                            </group>
+                            <group>
+                                <button name="open_recurrence_modal" type="object" string="Configure Recurrence" class="btn-primary" icon="fa-refresh"/>
+                            </group>
+                            <group invisible="1">
+                                <field name="recurrence_mode"/>
+                                <field name="recurrence_interval"/>
+                                <field name="recurrence_days"/>
+                                <field name="recurrence_day_of_month"/>
+                                <field name="recurrence_month"/>
+                                <field name="recurrence_end_type"/>
+                                <field name="recurrence_end_date"/>
+                                <field name="recurrence_count"/>
+                            </group>
+                        </page>
+                        <page string="Sub-Activities">
+                            <field name="child_ids" context="{'default_parent_id': id}">
+                                <list editable="bottom">
+                                    <field name="name"/>
+                                    <field name="user_ids" widget="many2many_tags"/>
+                                    <field name="collaborator_ids" widget="many2many_tags" optional="show"/>
+                                    <field name="date_start"/>
+                                    <field name="date_due"/>
+                                    <field name="duration_display" readonly="1"/>
+                                    <field name="state" widget="badge"/>
+                                    <field name="priority" widget="priority"/>
+                                    <field name="is_recurring"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page string="Related">
+                            <group>
+                                <field name="res_model"/>
+                                <field name="res_id"/>
+                                <field name="res_name"/>
+                            </group>
+                        </page>
+                    </notebook>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <!-- ACTIONS -->
+    <record id="action_activity_management_all" model="ir.actions.act_window">
+        <field name="name">All Activities</field>
+        <field name="res_model">activity.management</field>
+        <field name="view_mode">kanban,list,form,calendar</field>
+    </record>
+
+    <record id="action_activity_management_my" model="ir.actions.act_window">
+        <field name="name">My Activities</field>
+        <field name="res_model">activity.management</field>
+        <field name="view_mode">kanban,list,form,calendar</field>
+        <field name="domain">[('user_ids','in',[uid])]</field>
+    </record>
+</odoo>

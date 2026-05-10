@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <menuitem id="menu_activities_root" name="Activities" sequence="25"/>
+
+    <menuitem id="menu_activities_my" name="My Activities"
+              parent="menu_activities_root"
+              action="action_activity_management_my" sequence="10"/>
+
+    <menuitem id="menu_activities_all" name="All Activities"
+              parent="menu_activities_root"
+              action="action_activity_management_all" sequence="20"/>
+</odoo>

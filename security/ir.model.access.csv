@@ -1,0 +1,2 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_activity_management_all,activity.management all,model_activity_management,base.group_user,1,1,1,1

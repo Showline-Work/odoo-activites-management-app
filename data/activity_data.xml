@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo noupdate="1">
+    <record id="mail_activity_type_activities_management_followup" model="mail.activity.type">
+        <field name="name">Activities Management Follow-up</field>
+        <field name="icon">fa-tasks</field>
+        <field name="activity_management_default">True</field>
+    </record>
+
+    <record id="activity_management_demo_weekly_sync" model="activity.management">
+        <field name="name">Weekly Team Sync</field>
+        <field name="description"><p>Weekly recurring team sync activity.</p></field>
+        <field name="state">new</field>
+        <field name="priority">2</field>
+        <field name="is_recurring">True</field>
+        <field name="recurrence_type">weekly</field>
+        <field name="recurrence_interval">1</field>
+        <field name="recurrence_days">0</field>
+        <field name="activity_type_id" ref="mail_activity_type_activities_management_followup"/>
+    </record>
+</odoo>

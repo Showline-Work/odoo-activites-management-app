@@ -1,0 +1,163 @@
+// Activities Management - Google Tasks-inspired styling
+
+.o_activity_kanban {
+  .o_kanban_record {
+    border-radius: 12px;
+    border: 1px solid #e0e0e0;
+    transition: all 0.2s ease;
+    margin-bottom: 8px;
+
+    &:hover {
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      transform: translateY(-1px);
+    }
+
+    .o_kanban_record_top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      padding: 12px 12px 8px 12px;
+      border-bottom: 1px solid #f0f0f0;
+
+      .o_kanban_record_title {
+        font-size: 14px;
+        font-weight: 600;
+        color: #202124;
+      }
+
+      .fa-refresh {
+        color: #1a73e8;
+        font-size: 12px;
+      }
+    }
+
+    .o_kanban_record_body {
+      padding: 8px 12px 12px 12px;
+
+      .text-danger {
+        color: #ea4335 !important;
+      }
+
+      .text-info {
+        color: #1a73e8 !important;
+      }
+    }
+  }
+
+  // Priority colors for kanban cards
+  .o_priority_4 {
+    border-left: 4px solid #ea4335; // Urgent - Red
+  }
+
+  .o_priority_3 {
+    border-left: 4px solid #fbbc04; // High - Yellow
+  }
+
+  .o_priority_2 {
+    border-left: 4px solid #1a73e8; // Medium - Blue
+  }
+
+  .o_priority_1 {
+    border-left: 4px solid #34a853; // Low - Green
+  }
+}
+
+// Form view styling
+.o_activity_form {
+  .oe_title h1 {
+    font-size: 24px;
+    font-weight: 500;
+    color: #202124;
+  }
+
+  // Recurrence mode radio buttons
+  .o_field_radio {
+    .form-check {
+      margin-bottom: 8px;
+      padding: 10px 14px;
+      border-radius: 8px;
+      border: 1px solid #e0e0e0;
+      transition: all 0.15s ease;
+      cursor: pointer;
+
+      &:hover {
+        background-color: #f8f9fa;
+        border-color: #1a73e8;
+      }
+
+      &.active {
+        background-color: #e8f0fe;
+        border-color: #1a73e8;
+      }
+
+      .form-check-label {
+        font-weight: 500;
+        cursor: pointer;
+      }
+    }
+  }
+
+  // Priority stars
+  .o_priority_stars {
+    display: flex;
+    gap: 2px;
+
+    .fa-star {
+      color: #fbbc04;
+      cursor: pointer;
+      font-size: 18px;
+
+      &.text-muted {
+        color: #dadce0 !important;
+      }
+    }
+  }
+
+  // Status badges
+  .badge {
+    font-weight: 500;
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+  }
+}
+
+// List view styling
+.o_list_view {
+  .text-danger {
+    color: #ea4335 !important;
+  }
+
+  .text-muted {
+    color: #9aa0a6 !important;
+  }
+}
+
+// Calendar view styling
+.o_calendar_view {
+  .fc-event {
+    border-radius: 4px;
+    border: none;
+    padding: 2px 6px;
+    font-size: 12px;
+  }
+}
+
+// Duration field
+.o_field_duration {
+  .o_input {
+    background-color: #f8f9fa;
+    border: 1px solid #e0e0e0;
+  }
+}
+
+// Avatar stacks
+.o_field_many2many_avatar_user {
+  .o_avatar {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    margin-right: -6px;
+    border: 2px solid white;
+  }
+}
